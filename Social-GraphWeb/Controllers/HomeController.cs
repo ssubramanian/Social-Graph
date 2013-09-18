@@ -55,7 +55,7 @@ namespace Social_GraphWeb.Controllers
 
 
 			// shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
-			ICollection<PathsResult<Person, Knows>> paths = client.PathsBetween<Person, Knows>(meReference, donorReference, 15);
+			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(meReference, donorReference);
 
 
 			var pathViewModel = new PathViewModel()
@@ -103,6 +103,23 @@ namespace Social_GraphWeb.Controllers
 					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
 					Relationships = Return.As<IEnumerable<RelationshipInstance<TRelationship>>>("rels(p)")
 				});
+
+			
+			return pathsQuery.Results.ToList();
+		}
+
+		public static ICollection<PathsResult<TNode, TRelationship>> ShortesPathsBetween<TNode, TRelationship>(this IGraphClient client, NodeReference<TNode> startNode, NodeReference<TNode> endNode)
+			where TRelationship : Relationship, new()
+		{
+			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
+				.Start(new { a = startNode, z = endNode })
+				.Match(string.Format("p=shortestPath(a-[:{0}*]->(z))", new TRelationship().RelationshipTypeKey))
+				.Return(p => new PathsResult<TNode, TRelationship>
+				{
+					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
+					Relationships = Return.As<IEnumerable<RelationshipInstance<TRelationship>>>("rels(p)")
+				});
+
 
 			return pathsQuery.Results.ToList();
 		}
