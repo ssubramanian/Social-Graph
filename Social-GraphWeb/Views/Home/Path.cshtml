@@ -1,0 +1,24 @@
+﻿@model Social_GraphWeb.Controllers.PathViewModel
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Path</title>
+	</head>
+	<body>
+		<div>
+			    <p>There are @Model.RawPath.Length "hops" between you:</p> 
+				<ul>
+				@foreach (var step in Model.RawPath.Nodes)
+				{
+					<li>@step</li>
+				}
+				</ul>
+		</div>
+	</body>
+</html>
