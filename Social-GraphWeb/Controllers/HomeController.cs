@@ -97,7 +97,7 @@ namespace Social_GraphWeb.Controllers
 		{
 			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
 				.Start(new { a = startNode, z = endNode })
-				.Match(string.Format("p=a-[:{0}*1..{1}]->(z)", new TRelationship().RelationshipTypeKey, levels))
+				.Match(string.Format("p=a-[:{0}*1..{1}]-(z)", new TRelationship().RelationshipTypeKey, levels))
 				.Return(p => new PathsResult<TNode, TRelationship>
 				{
 					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
@@ -113,7 +113,7 @@ namespace Social_GraphWeb.Controllers
 		{
 			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
 				.Start(new { a = startNode, z = endNode })
-				.Match(string.Format("p=shortestPath(a-[:{0}*]->(z))", new TRelationship().RelationshipTypeKey))
+				.Match(string.Format("p=shortestPath(a-[:{0}*]-(z))", new TRelationship().RelationshipTypeKey))
 				.Return(p => new PathsResult<TNode, TRelationship>
 				{
 					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
