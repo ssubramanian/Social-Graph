@@ -12,11 +12,13 @@
 	</head>
 	<body>
 		<div>
-			    <p>There are @Model.RawPath.Length "hops" between you:</p> 
+			    <p>There are @Model.Path.Nodes.Count() -1 people between you:</p> 
 				<ul>
-				@foreach (var step in Model.RawPath.Nodes)
+				@foreach (var node in Model.Path.Nodes)
 				{
-					<li>@step</li>
+					<li>
+						@node.Data.FirstName @(node.Reference.Id==Model.MyId? " (that's you!)": "")
+					</li>
 				}
 				</ul>
 		</div>
