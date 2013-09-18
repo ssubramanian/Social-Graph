@@ -12,13 +12,18 @@
 	</head>
 	<body>
 		<div>
-			    <p>There are @Model.Path.Nodes.Count() people between you:</p> 
+			    <p>There are @Model.Path.Nodes.Count() people between you and big money:</p> 
 				<ul>
-				@foreach (var node in Model.Path.Nodes)
-				{
-					<li>
-						@node.Data.FirstName @(node.Reference.Id==Model.MyId? " (that's you!)": "")
-					</li>
+				@{
+					var count = 0;
+					foreach (var node in Model.Path.Nodes)
+					{
+						count++;
+						<li>
+							@node.Data.FirstName @(node.Reference.Id==Model.MyId? " (that's you!)": "")
+							@(Model.Path.Nodes.Count() == count ? "(big money!)" : "")
+						</li>
+					}
 				}
 				</ul>
 		</div>
