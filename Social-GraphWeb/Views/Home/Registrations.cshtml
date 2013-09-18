@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Social_GraphWeb.Controllers.Person>
+
+@{
+	ViewBag.Title = "title";
+}
+
+<h2>Others registered for the same program as me:</h2>
+<ul>
+	@foreach (var person in Model)
+	{
+		<li>@person.FirstName</li>
+	}
+</ul>
