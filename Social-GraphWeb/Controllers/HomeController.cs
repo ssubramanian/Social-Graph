@@ -15,8 +15,7 @@ namespace Social_GraphWeb.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
-            //var graphScaffolding = new Scaffolding();
+            
 
             return View();
         }

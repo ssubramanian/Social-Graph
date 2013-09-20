@@ -1,7 +1,8 @@
 ﻿@model Social_GraphWeb.Controllers.PathViewModel
 
 @{
-	Layout = null;
+	Layout = "../Shared/_Layout.cshtml";
+	ViewBag.Title = "The Path to Financial Development";
 }
 
 <!DOCTYPE html>
@@ -25,7 +26,7 @@
 					var endName = Model.NodeName(endNode);
 						
 					count++;
-					<li>
+					<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
 						@startName @relationship.TypeKey @endName
 						@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
 					</li>
@@ -46,7 +47,7 @@
 							var startName = Model.NodeName(startNode);
 							var endName = Model.NodeName(endNode);
 		  
-							<li>
+							<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
 								@startName @relationship.TypeKey @endName
 							</li>
 						}
