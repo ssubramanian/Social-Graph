@@ -47,33 +47,47 @@ namespace Social_GraphWeb.Controllers
 
 		public ActionResult Path()
 		{
-			var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
+			var pathViewModel = QueryForPath(15, 9);
 
+			return View("Path", pathViewModel);
+		}
+
+		public ActionResult KnownPeople(int startNodeId, int endNodeId)
+		{
+			// Example:  http://localhost:56035/Home/KnownPeople?startNodeId=15&endNodeId=9
+			// Example:  http://localhost:56035/Home/KnownPeople?startNodeId=9&endNodeId=14
+
+			var pathViewModel = QueryForPath(startNodeId, endNodeId);
+
+			return View("Path", pathViewModel);
+		}
+
+		private PathViewModel QueryForPath(int startNodeId, int endNodeId)
+		{
+			var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
 			client.Connect();
 
-			var meReference = new NodeReference<Person>(15, client);
-			var donorReference = new NodeReference<Person>(9, client);
-
+			var startReference = new NodeReference<Person>(startNodeId, client);
+			var endReference = new NodeReference<Person>(endNodeId, client);
 
 			// shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
-			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(meReference, donorReference);
-			var me = client.Get<Person>(meReference);
-			var donor = client.Get<Person>(donorReference);
+			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(startReference, endReference);
+			var me = client.Get<Person>(startReference);
+			var donor = client.Get<Person>(endReference);
 
 			var pathViewModel = new PathViewModel()
-				{
-					MyId = meReference.Id,
-					Me = me,
-					Target = donor,
-					TargetId = donorReference.Id,
-					Path = paths.First()
-				};
+			{
+				MyId = startReference.Id,
+				Me = me,
+				Target = donor,
+				TargetId = endReference.Id,
+				Path = paths.First()
+			};
 
-			
-			return View(pathViewModel);
+			return pathViewModel;
 		}
     }
-
+	
 	public class PathsResult<TNode, TRelationship> where TRelationship : Relationship, new()
 	{
 		public IEnumerable<Node<TNode>> Nodes { get; set; }
