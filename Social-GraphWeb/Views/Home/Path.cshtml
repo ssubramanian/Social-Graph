@@ -16,10 +16,10 @@
 			<ul>
 			@{
 				var count = 0;
-				foreach (var relationship in Model.Path.Relationships)
+				foreach (var relationship in Model.ShortestPath.Relationships)
 				{
-					var startNode = Model.Path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-					var endNode = Model.Path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+					var startNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+					var endNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
 					var startName = Model.NodeName(startNode);
 					var endName = Model.NodeName(endNode);

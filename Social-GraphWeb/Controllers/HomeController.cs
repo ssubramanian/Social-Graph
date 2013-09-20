@@ -58,7 +58,7 @@ namespace Social_GraphWeb.Controllers
 			// Example, no path found:	http://localhost:56035/Home/KnownPeople?startNodeId=2&endNodeId=14
 
 			var pathViewModel = QueryForPath(startNodeId, endNodeId);
-			if (pathViewModel.Path != null)
+			if (pathViewModel.ShortestPath != null)
 				return View("Path", pathViewModel);
 
 			return View("NoPath", pathViewModel);
@@ -97,7 +97,7 @@ namespace Social_GraphWeb.Controllers
 					Target = end,
 					TargetId = endReference.Id,
 					CountOfHops = countOfHops,
-					Path = path
+					ShortestPath = path
 				};
 
 			return pathViewModel;
@@ -114,7 +114,7 @@ namespace Social_GraphWeb.Controllers
 	{
 		public PathsResult RawPath { get; set; }
 
-		public PathsResult<Person, Knows> Path { get; set; }
+		public PathsResult<Person, Knows> ShortestPath { get; set; }
 
 		public long MyId { get; set; }
 
