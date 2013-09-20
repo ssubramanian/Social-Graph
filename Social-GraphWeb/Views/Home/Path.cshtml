@@ -13,7 +13,7 @@
 	<body>
 		<div>
 			<p>There are @Model.CountOfHops people between you and big money:</p> 
-			<ul>
+			<ol>
 			@{
 				var count = 0;
 				foreach (var relationship in Model.ShortestPath.Relationships)
@@ -31,7 +31,28 @@
 					</li>
 				}
 			}
-			</ul>
+			</ol>
+			
+			<p>There are @Model.AllPaths.Count() other paths between you and big money:</p> 
+			<div>
+				@foreach (var path in Model.AllPaths)
+				{
+					<ol>
+						@foreach (var relationship in path.Relationships)
+						{
+							var startNode = path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+							var endNode = path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+
+							var startName = Model.NodeName(startNode);
+							var endName = Model.NodeName(endNode);
+		  
+							<li>
+								@startName @relationship.TypeKey @endName
+							</li>
+						}
+					</ol>
+				}
+			</div>
 		</div>
 	</body>
 </html>
