@@ -64,6 +64,17 @@ namespace Social_GraphWeb.Controllers
 			return View("NoPath", pathViewModel);
 		}
 
+        public ActionResult FriendsOfFriends(int startNodeId)
+        {
+            // Example, http://localhost:56035/Home/FriendsOfFriends?startNodeId=9
+
+            //var pathViewModel = QueryForPath(startNodeId, endNodeId);
+            //if (pathViewModel.ShortestPath != null)
+            //    return View("Path", pathViewModel);
+
+            return View("Friends", null);
+        }
+
 		private PathViewModel QueryForPath(int startNodeId, int endNodeId)
 		{
 			var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
@@ -168,4 +179,15 @@ namespace Social_GraphWeb.Controllers
 			return firstName;
 		}
 	}
+
+    public class FriendsViewModel
+    {
+        public long MyId { get; set; }
+
+        public Node<Person> Me { get; set; }
+
+        public int Level { get; set; }
+
+        public IEnumerable<Person> Friends { get; set; }
+    }
 }
