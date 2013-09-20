@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using Neo4jClient;
+using Neo4jClient.Cypher;
 using Social_GraphWeb.Controllers;
 using Social_GraphWeb.Models;
 
@@ -34,5 +35,30 @@ namespace Social_GraphWeb.Specs
 				 Console.WriteLine("{0} {1} {2}", startNode.Data.FirstName, relationshipInstance.TypeKey, endNode.Data.FirstName);
 			 }
 		 }
+
+		[Test]
+		public void ConnectToAssociation()
+		{
+			var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
+			client.Connect();
+
+			var query = client.Cypher
+				  .Start(new { n = All.Nodes })
+			      .Return<Node<Person>>("n");
+
+			var associationNode = client.Get<Association>(new NodeReference(5));
+
+			foreach (var person in query.Results)
+			{
+				if (!string.IsNullOrEmpty(person.Data.FirstName))
+				{
+
+					var relationship = client.CreateRelationship(person.Reference, new IsMember(associationNode.Reference));
+					
+				}
+			}
+		}
 	}
+
+	
 }

@@ -80,4 +80,24 @@ namespace Social_GraphWeb.Models
 			get { return TypeKey; }
 		}
 	}
+
+	public class IsMember : Relationship, IRelationshipAllowingSourceNode<Person>, IRelationshipAllowingTargetNode<Association>
+	{
+		public IsMember() : base(-1)
+		{
+			
+		}
+		public IsMember(NodeReference targetNode) : base(targetNode)
+		{
+		}
+
+		public IsMember(NodeReference targetNode, object data) : base(targetNode, data)
+		{
+		}
+
+		public override string RelationshipTypeKey
+		{
+			get { return "is_member"; }
+		}
+	}
 }

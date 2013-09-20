@@ -14,4 +14,9 @@
 	{
 		public string ProgramName { get; set; }
 	}
+
+	public class Association
+	{
+		public string AssociationName { get; set; }
+	}
 }

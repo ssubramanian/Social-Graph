@@ -72,8 +72,16 @@ namespace Social_GraphWeb.Controllers
 			var startReference = new NodeReference<Person>(startNodeId, client);
 			var endReference = new NodeReference<Person>(endNodeId, client);
 
-			// shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
-			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(startReference, endReference);
+			var pathsQuery = client.Cypher
+			                       .Start(new {a = startReference, z = endReference})
+								   .Match("p=shortestPath(a-[:knows|teaches|takes_class_from|works_with*]->(z))")
+			                       .Return(p => new PathsResult<Person, Knows>
+				                       {
+					                       Nodes = Return.As<IEnumerable<Node<Person>>>("nodes(p)"),
+					                       Relationships = Return.As<IEnumerable<RelationshipInstance<Knows>>>("rels(p)")
+				                       });
+
+			ICollection<PathsResult<Person, Knows>> paths = pathsQuery.Results.ToList();
 			var start = client.Get<Person>(startReference);
 			var end = client.Get<Person>(endReference);
 
