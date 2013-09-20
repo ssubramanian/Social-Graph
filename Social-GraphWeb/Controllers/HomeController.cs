@@ -15,7 +15,8 @@ namespace Social_GraphWeb.Controllers
     {
         public ActionResult Index()
         {
-            
+            ViewBag.Message = "Welcome to ASP.NET MVC!";
+            //var graphScaffolding = new Scaffolding();
 
             return View();
         }
@@ -67,11 +68,19 @@ namespace Social_GraphWeb.Controllers
         {
             // Example, http://localhost:56035/Home/FriendsOfFriends?startNodeId=9
 
-            //var pathViewModel = QueryForPath(startNodeId, endNodeId);
-            //if (pathViewModel.ShortestPath != null)
-            //    return View("Path", pathViewModel);
+            var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
 
-            return View("Friends", null);
+            client.Connect();
+            var startReference = new NodeReference<Person>(startNodeId, client);
+
+            //Still working on a query... Senthil
+
+            //var friends = client.Cypher
+            //                               .Start(new {a = startReference})
+            //                               .Match("p=shortestPath(a-[:knows|teaches|takes_class_from|works_with*]->(z))")
+            //                               .Return<Person>();
+
+            return View("Path", null);
         }
 
 		private PathViewModel QueryForPath(int startNodeId, int endNodeId)
