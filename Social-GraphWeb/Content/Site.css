@@ -4,12 +4,12 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #5c87b2;
+    background-color: #425756;
     font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin: 0;
     padding: 0;
-    color: #696969;
+    color: #6D6D6D;
 }
 
 a:link {
@@ -78,12 +78,12 @@ h5, h6 {
 page width. Or, you can specify an exact pixel width. */
 .page {
     width: 90%;
+	max-width: 1024px;
     margin-left: auto;
     margin-right: auto;
 }
 
 header, #header {
-    position: relative;
     margin-bottom: 0px;
     color: #000;
     padding: 0;
@@ -103,9 +103,9 @@ header h1, #header h1 {
 #main {
     padding: 30px 30px 15px 30px;
     background-color: #fff;
-    border-radius: 4px 0 0 0;
-    -webkit-border-radius: 4px 0 0 0;
-    -moz-border-radius: 4px 0 0 0;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius: 4px 4px 0 0;
 }
 
 footer, 
@@ -238,7 +238,7 @@ table th {
 }
 
 .error {
-    color: Red;
+    color: #EE264E;
 }
 
 nav, 
@@ -278,7 +278,7 @@ div#title {
 /* Styles for validation helpers
 -----------------------------------------------------------*/
 .field-validation-error {
-    color: #ff0000;
+    color: #EE264E;
 }
 
 .field-validation-valid {
@@ -286,13 +286,13 @@ div#title {
 }
 
 .input-validation-error {
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
+    border: 1px solid #EE264E;
+    background-color: #dff8f7;
 }
 
 .validation-summary-errors {
     font-weight: bold;
-    color: #ff0000;
+    color: #EE264E;
 }
 
 .validation-summary-valid {
