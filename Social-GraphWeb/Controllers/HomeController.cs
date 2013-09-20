@@ -75,12 +75,15 @@ namespace Social_GraphWeb.Controllers
 			var me = client.Get<Person>(startReference);
 			var donor = client.Get<Person>(endReference);
 
+			var countOfHops = paths.First().Nodes.Count() - 1;
+
 			var pathViewModel = new PathViewModel()
 			{
 				MyId = startReference.Id,
 				Me = me,
 				Target = donor,
 				TargetId = endReference.Id,
+				CountOfHops = countOfHops,
 				Path = paths.First()
 			};
 
@@ -107,6 +110,8 @@ namespace Social_GraphWeb.Controllers
 		public Node<Person> Me { get; set; }
 
 		public Node<Person> Target { get; set; }
+
+		public int CountOfHops { get; set; }
 
 		public string NodeName(Node<Person> node)
 		{
