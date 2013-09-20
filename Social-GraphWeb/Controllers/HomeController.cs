@@ -7,6 +7,7 @@ using Neo4jClient;
 using Neo4jClient.ApiModels.Cypher;
 using Neo4jClient.Cypher;
 using Social_GraphWeb.Graph;
+using Social_GraphWeb.Models;
 
 namespace Social_GraphWeb.Controllers
 {
@@ -75,81 +76,6 @@ namespace Social_GraphWeb.Controllers
 		public IEnumerable<RelationshipInstance<TRelationship>> Relationships { get; set; }
 	}
 
-	public static class Neo4JClientExtensions
-	{
-		public static ICollection<PathsResult<TNode, TRelationship>> Paths<TNode, TRelationship>(this IGraphClient client, NodeReference<TNode> rootNode, int levels = 1)
-			where TRelationship : Relationship, new()
-		{
-			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
-				.Start(new { n = rootNode })
-				.Match(string.Format("p=n-[:{0}*1..{1}]->()", new TRelationship().RelationshipTypeKey, levels))
-				.Return(p => new PathsResult<TNode, TRelationship>
-				{
-					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
-					Relationships = Return.As<IEnumerable<RelationshipInstance<TRelationship>>>("rels(p)")
-				});
-
-			return pathsQuery.Results.ToList();
-		}
-
-		public static ICollection<PathsResult<TNode, TRelationship>> PathsBetween<TNode, TRelationship>(this IGraphClient client, NodeReference<TNode> startNode, NodeReference<TNode> endNode, int levels = 1)
-			where TRelationship : Relationship, new()
-		{
-			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
-				.Start(new { a = startNode, z = endNode })
-				.Match(string.Format("p=a-[:{0}*1..{1}]-(z)", new TRelationship().RelationshipTypeKey, levels))
-				.Return(p => new PathsResult<TNode, TRelationship>
-				{
-					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
-					Relationships = Return.As<IEnumerable<RelationshipInstance<TRelationship>>>("rels(p)")
-				});
-
-			
-			return pathsQuery.Results.ToList();
-		}
-
-		public static ICollection<PathsResult<TNode, TRelationship>> ShortesPathsBetween<TNode, TRelationship>(this IGraphClient client, NodeReference<TNode> startNode, NodeReference<TNode> endNode)
-			where TRelationship : Relationship, new()
-		{
-			ICypherFluentQuery<PathsResult<TNode, TRelationship>> pathsQuery = client.Cypher
-				.Start(new { a = startNode, z = endNode })
-				.Match(string.Format("p=shortestPath(a-[:{0}*]-(z))", new TRelationship().RelationshipTypeKey))
-				.Return(p => new PathsResult<TNode, TRelationship>
-				{
-					Nodes = Return.As<IEnumerable<Node<TNode>>>("nodes(p)"),
-					Relationships = Return.As<IEnumerable<RelationshipInstance<TRelationship>>>("rels(p)")
-				});
-
-
-			return pathsQuery.Results.ToList();
-		}
-	}
-
-	public class Knows : Relationship, IRelationshipAllowingSourceNode<Person>, IRelationshipAllowingTargetNode<Person>
-	{
-		public const string TypeKey = "knows";
-
-		public Knows()
-			: base(-1)
-		{
-		}
-
-		public Knows(NodeReference targetNode)
-			: base(targetNode)
-		{
-		}
-
-		public Knows(NodeReference targetNode, object data)
-			: base(targetNode, data)
-		{
-		}
-
-		public override string RelationshipTypeKey
-		{
-			get { return TypeKey; }
-		}
-	}
-
 	public class PathViewModel
 	{
 		public PathsResult RawPath { get; set; }
@@ -157,20 +83,5 @@ namespace Social_GraphWeb.Controllers
 		public PathsResult<Person, Knows> Path { get; set; }
 
 		public long MyId { get; set; }
-	}
-
-	public class Person
-	{
-		public string FirstName { get; set; }
-	}
-
-	public class Session
-	{
-		public string SessionName { get; set; }
-	}
-
-	public class Program
-	{
-		public string ProgramName { get; set; }
 	}
 }
