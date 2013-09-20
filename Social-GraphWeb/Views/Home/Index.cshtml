@@ -1,8 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Engagement Graph";
 }
 
-<h2>@ViewBag.Message</h2>
-<p>
-    To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.
-</p>
+<h2>Using graph database technology for member and donor engagement</h2>
+<ul>
+	<li><a href="@Url.Action("Path")">The Path to Financial Development</a></li>
+	<li><a href="@Url.Action("KnownPeople", new { startNodeId = 15, endNodeId =9})">The Path to Financial Development</a></li>
+</ul>
