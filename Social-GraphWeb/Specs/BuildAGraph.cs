@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using Neo4jClient;
+using Social_GraphWeb.Controllers;
+using Social_GraphWeb.Models;
 
 namespace Social_GraphWeb.Specs
 {
@@ -13,7 +17,22 @@ namespace Social_GraphWeb.Specs
 			 var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
 			 client.Connect();
 
+			 var meReference = new NodeReference<Person>(15, client);
+			 var donorReference = new NodeReference<Person>(9, client);
 
+
+			 // shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
+			 ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(meReference, donorReference);
+
+			 var path = paths.First();
+
+			 foreach (var relationshipInstance in path.Relationships)
+			 {
+				 var startNode = path.Nodes.First(n => n.Reference == relationshipInstance.StartNodeReference);
+				 var endNode = path.Nodes.First(n => n.Reference == relationshipInstance.EndNodeReference);
+
+				 Console.WriteLine("{0} {1} {2}", startNode.Data.FirstName, relationshipInstance.TypeKey, endNode.Data.FirstName);
+			 }
 		 }
 	}
 }

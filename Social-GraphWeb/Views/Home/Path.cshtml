@@ -16,12 +16,18 @@
 				<ul>
 				@{
 					var count = 0;
-					foreach (var node in Model.Path.Nodes)
+					foreach (var relationship in Model.Path.Relationships)
 					{
+						var startNode = Model.Path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+						var endNode = Model.Path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+
+						var startName = Model.NodeName(startNode);
+						var endName = Model.NodeName(endNode);
+						
 						count++;
 						<li>
-							@node.Data.FirstName @(node.Reference.Id==Model.MyId? " (that's you!)": "")
-							@(Model.Path.Nodes.Count() == count ? "(big money!)" : "")
+							@startName @relationship.TypeKey @endName
+							@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
 						</li>
 					}
 				}

@@ -57,11 +57,15 @@ namespace Social_GraphWeb.Controllers
 
 			// shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
 			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(meReference, donorReference);
-
+			var me = client.Get<Person>(meReference);
+			var donor = client.Get<Person>(donorReference);
 
 			var pathViewModel = new PathViewModel()
 				{
 					MyId = meReference.Id,
+					Me = me,
+					Target = donor,
+					TargetId = donorReference.Id,
 					Path = paths.First()
 				};
 
@@ -83,5 +87,24 @@ namespace Social_GraphWeb.Controllers
 		public PathsResult<Person, Knows> Path { get; set; }
 
 		public long MyId { get; set; }
+
+		public long TargetId { get; set; }
+
+		public Node<Person> Me { get; set; }
+
+		public Node<Person> Target { get; set; }
+
+		public string NodeName(Node<Person> node)
+		{
+			var firstName = node.Data.FirstName;
+
+			if (node.Reference == Me.Reference)
+				return firstName + " (you!)";
+
+			if (node.Reference == Target.Reference)
+				return firstName + " (big money!)";
+
+			return firstName;
+		}
 	}
 }
