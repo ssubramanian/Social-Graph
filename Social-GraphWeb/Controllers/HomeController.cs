@@ -54,12 +54,14 @@ namespace Social_GraphWeb.Controllers
 
 		public ActionResult KnownPeople(int startNodeId, int endNodeId)
 		{
-			// Example:  http://localhost:56035/Home/KnownPeople?startNodeId=15&endNodeId=9
-			// Example:  http://localhost:56035/Home/KnownPeople?startNodeId=9&endNodeId=14
+			// Example, path found:		http://localhost:56035/Home/KnownPeople?startNodeId=9&endNodeId=14
+			// Example, no path found:	http://localhost:56035/Home/KnownPeople?startNodeId=2&endNodeId=14
 
 			var pathViewModel = QueryForPath(startNodeId, endNodeId);
+			if (pathViewModel.Path != null)
+				return View("Path", pathViewModel);
 
-			return View("Path", pathViewModel);
+			return View("NoPath", pathViewModel);
 		}
 
 		private PathViewModel QueryForPath(int startNodeId, int endNodeId)
@@ -72,20 +74,23 @@ namespace Social_GraphWeb.Controllers
 
 			// shameless code stealing from http://geekswithblogs.net/cskardon/archive/2013/07/23/neo4jclient-ndash-getting-path-results.aspx
 			ICollection<PathsResult<Person, Knows>> paths = client.ShortesPathsBetween<Person, Knows>(startReference, endReference);
-			var me = client.Get<Person>(startReference);
-			var donor = client.Get<Person>(endReference);
+			var start = client.Get<Person>(startReference);
+			var end = client.Get<Person>(endReference);
 
-			var countOfHops = paths.First().Nodes.Count() - 1;
+			int countOfHops = 0;
+			var path = paths.FirstOrDefault();
+			if (path != null && path.Nodes.Any())
+				countOfHops = path.Nodes.Count() - 1;
 
 			var pathViewModel = new PathViewModel()
-			{
-				MyId = startReference.Id,
-				Me = me,
-				Target = donor,
-				TargetId = endReference.Id,
-				CountOfHops = countOfHops,
-				Path = paths.First()
-			};
+				{
+					MyId = startReference.Id,
+					Me = start,
+					Target = end,
+					TargetId = endReference.Id,
+					CountOfHops = countOfHops,
+					Path = path
+				};
 
 			return pathViewModel;
 		}

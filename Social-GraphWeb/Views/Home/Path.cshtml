@@ -12,26 +12,26 @@
 	</head>
 	<body>
 		<div>
-			    <p>There are @Model.CountOfHops people between you and big money:</p> 
-				<ul>
-				@{
-					var count = 0;
-					foreach (var relationship in Model.Path.Relationships)
-					{
-						var startNode = Model.Path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-						var endNode = Model.Path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+			<p>There are @Model.CountOfHops people between you and big money:</p> 
+			<ul>
+			@{
+				var count = 0;
+				foreach (var relationship in Model.Path.Relationships)
+				{
+					var startNode = Model.Path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+					var endNode = Model.Path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
-						var startName = Model.NodeName(startNode);
-						var endName = Model.NodeName(endNode);
+					var startName = Model.NodeName(startNode);
+					var endName = Model.NodeName(endNode);
 						
-						count++;
-						<li>
-							@startName @relationship.TypeKey @endName
-							@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
-						</li>
-					}
+					count++;
+					<li>
+						@startName @relationship.TypeKey @endName
+						@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
+					</li>
 				}
-				</ul>
+			}
+			</ul>
 		</div>
 	</body>
 </html>
