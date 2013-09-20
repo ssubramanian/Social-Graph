@@ -33,9 +33,9 @@
 			}
 			</ol>
 			
-			<p>There are @Model.AllPaths.Count() other paths between you and big money:</p> 
+			<p>There are @Model.OtherPaths.Count() other paths between you and big money:</p> 
 			<div>
-				@foreach (var path in Model.AllPaths)
+				@foreach (var path in Model.OtherPaths)
 				{
 					<ol>
 						@foreach (var relationship in path.Relationships)

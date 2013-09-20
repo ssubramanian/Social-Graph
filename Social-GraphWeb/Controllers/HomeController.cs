@@ -74,15 +74,16 @@ namespace Social_GraphWeb.Controllers
 			var start = client.Get<Person>(startReference);
 			var end = client.Get<Person>(endReference);
 
-			var shortestPaths = GetShortestPaths(client, startReference, endReference);
-
-			var allPaths = GetAllPaths(client, startReference, endReference);
+			var allPaths = GetAllPaths(client, startReference, endReference)
+				.OrderBy(p=>p.Relationships.Count())
+				.ToList();
 
 			int countOfHops = 0;
-			var shortestPath = shortestPaths.FirstOrDefault();
+			var shortestPath = allPaths.FirstOrDefault();
 			if (shortestPath != null && shortestPath.Nodes.Any())
 				countOfHops = shortestPath.Nodes.Count() - 1;
 
+			allPaths.Remove(shortestPath);
 			var pathViewModel = new PathViewModel()
 				{
 					MyId = startReference.Id,
@@ -92,7 +93,7 @@ namespace Social_GraphWeb.Controllers
 					CountOfHops = countOfHops,
 					ShortestPath = shortestPath,
 
-					AllPaths = allPaths
+					OtherPaths = allPaths
 				};
 
 			return pathViewModel;
@@ -152,7 +153,7 @@ namespace Social_GraphWeb.Controllers
 
 		public int CountOfHops { get; set; }
 
-		public IEnumerable<PathsResult<Person, Knows>> AllPaths { get; set; }
+		public IEnumerable<PathsResult<Person, Knows>> OtherPaths { get; set; }
 
 		public string NodeName(Node<Person> node)
 		{
