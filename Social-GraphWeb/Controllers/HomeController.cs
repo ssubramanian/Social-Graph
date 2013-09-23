@@ -64,7 +64,7 @@ namespace Social_GraphWeb.Controllers
 			return View("NoPath", pathViewModel);
 		}
 
-        public ActionResult FriendsOfFriends(int startNodeId)
+        public ActionResult FriendsOfFriends(int startNodeId, int startLevel = 1, int endLevel = 1)
         {
             // Example, http://localhost:56035/Home/FriendsOfFriends?startNodeId=9
 
@@ -75,12 +75,22 @@ namespace Social_GraphWeb.Controllers
 
             //Still working on a query... Senthil
 
-            //var friends = client.Cypher
-            //                               .Start(new {a = startReference})
-            //                               .Match("p=shortestPath(a-[:knows|teaches|takes_class_from|works_with*]->(z))")
-            //                               .Return<Person>();
+	        
+	        var match = string.Format("me-[:knows|teaches|takes_class_from|works_with*{0}..{1}]->(friend)", startLevel, endLevel);
+	        var friends = client.Cypher
+							.Start(new { me = startReference })
+							.Match(match)
+							.ReturnDistinct<Node<Person>>("friend")
+							.Results.ToList();
 
-            return View("Path", null);
+	        var viewModel = new FriendsViewModel()
+		        {
+			        Friends = friends,
+			        Level = endLevel,
+			        Me = client.Get<Person>(startReference),
+					MyId = startNodeId
+		        };
+            return View(viewModel);
         }
 
 		private PathViewModel QueryForPath(int startNodeId, int endNodeId)
@@ -196,6 +206,6 @@ namespace Social_GraphWeb.Controllers
 
         public int Level { get; set; }
 
-        public IEnumerable<Person> Friends { get; set; }
+		public List<Node<Person>> Friends { get; set; }
     }
 }
