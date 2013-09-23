@@ -25,7 +25,7 @@
 	{
 		<li>
 			<a href="@Url.Action("FriendsOfFriends", new { startNodeId = person.Reference.Id, endLevel = 100 })">@person.Data.FirstName</a>
-			<a class="extra-link" href="@Url.Action("KnownPeople", new { startNodeId = person.Reference.Id, endNodeId = Model.Me.Reference.Id })">(How does @person.Data.FirstName know @Model.Me.Data.FirstName?)</a>
+			<a class="extra-link" href="@Url.Action("Path", new { startNodeId = person.Reference.Id, endNodeId = Model.Me.Reference.Id })">(How does @person.Data.FirstName know @Model.Me.Data.FirstName?)</a>
 		</li>
 	}
 </ul>

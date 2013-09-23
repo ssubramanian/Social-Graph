@@ -47,7 +47,7 @@ namespace Social_GraphWeb.Controllers
 			return View(fluentQuery.Results);
 		}
 
-	    public ActionResult KnownPeople(int startNodeId, int endNodeId)
+	    public ActionResult Path(int startNodeId, int endNodeId)
 		{
 			// Example, path found:		http://localhost:56035/Home/KnownPeople?startNodeId=9&endNodeId=14
 			// Example, no path found:	http://localhost:56035/Home/KnownPeople?startNodeId=2&endNodeId=14
