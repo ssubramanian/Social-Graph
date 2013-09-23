@@ -69,7 +69,7 @@ namespace Social_GraphWeb.Controllers
             var startReference = new NodeReference<Person>(startNodeId, client);
 
 			var match = string.Format("me-[:knows|teaches|takes_class_from|works_with|plays_tennis_with|plays_golf_with|married_to*{0}..{1}]->(friend)", startLevel, endLevel);
-	        var where = string.Format("NOT (ID(friend) IN [{0}])", startNodeId);
+	        var where = string.Format("friend <> me");
 
 	        var friends = client.Cypher
 							.Start(new { me = startReference })
