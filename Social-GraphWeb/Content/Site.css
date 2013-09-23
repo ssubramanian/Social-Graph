@@ -4,7 +4,7 @@ to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
 body {
-    background-color: #425756;
+    background-color: #404040;
     font-size: .85em;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     margin: 0;
@@ -13,16 +13,16 @@ body {
 }
 
 a:link {
-    color: #84b1ad;
+    color: #88A4A1;
     text-decoration: underline;
 }
 
 a:visited {
-    color: #2b3938;
+    color: #378E85;
 }
 
 a:hover {
-    color: #A5DBD8;
+    color: #A8DBD6;
     text-decoration: none;
 }
 
@@ -55,7 +55,7 @@ section {
 ----------------------------------------------------------*/
 h1, h2, h3, h4, h5, h6 {
     font-size: 1.5em;
-    color: #000;
+    color: #333;
 }
 
 h1 {
