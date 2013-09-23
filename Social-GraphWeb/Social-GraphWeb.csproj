@@ -105,6 +105,8 @@
     <Compile Include="Specs\BuildAGraph.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\FredsFriends.PNG" />
+    <Content Include="Content\JimsNetwork.PNG" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -193,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\FriendsOfFriends.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Image.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

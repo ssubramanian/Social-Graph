@@ -1,0 +1,8 @@
+﻿@model string
+
+@{
+	ViewBag.Title = Model;
+	Layout = null;
+}
+
+<img src="@Url.Content("~/Content/" + @Model)"/>
