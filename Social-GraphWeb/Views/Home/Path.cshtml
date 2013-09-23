@@ -6,6 +6,7 @@
 }
 
 <div>
+	<img src="@Url.Content("~/Content/" + Model.Me.Reference.Id  +".jpg")"/><img src="@Url.Content("~/Content/" + Model.Target.Reference.Id  +".jpg")"/>
 	<p class="path-title">There are <label class="highlight-digit">@Model.CountOfHops</label> people between @Model.Me.Data.FirstName and @Model.Target.Data.FirstName:</p> 
 	<ol>
 	@{
