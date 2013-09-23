@@ -35,9 +35,13 @@ a:active {
     color: #EFAD1C;
 }
 
-p, ul {
+p, ul, ol {
     margin-bottom: 20px;
     line-height: 1.6em;
+}
+
+ul {
+	list-style-type: none;
 }
 
 header,
