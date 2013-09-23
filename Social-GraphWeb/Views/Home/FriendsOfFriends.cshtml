@@ -5,9 +5,15 @@
 	Layout = "../shared/_Layout.cshtml";
 }
 
-<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, endLevel = 100 })">@Model.Me.Data.FirstName's whole network</a>
-<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, startLevel = 1 ,endLevel = 1 })">@Model.Me.Data.FirstName's immediate friends</a>
-<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, startLevel = 2, endLevel = 2 })">Friends of @Model.Me.Data.FirstName's friends</a>
+<div>
+	<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, endLevel = 100 })">@Model.Me.Data.FirstName's whole network</a>	
+</div>
+<div>
+	<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, startLevel = 1 ,endLevel = 1 })">@Model.Me.Data.FirstName's immediate friends</a>	
+</div>
+<div>
+	<a href="@Url.Action("FriendsOfFriends", new { startNodeId = Model.MyId, startLevel = 2, endLevel = 2 })">Friends of @Model.Me.Data.FirstName's friends</a>	
+</div>
 
 <ol>
 	@foreach (var person in Model.Friends)
