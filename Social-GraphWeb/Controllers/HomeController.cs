@@ -78,6 +78,7 @@ namespace Social_GraphWeb.Controllers
 	        var friends = client.Cypher
 							.Start(new { me = startReference })
 							.Match(match)
+                            .Where("NOT (ID(friend) IN ["+ startNodeId +"])")
 							.ReturnDistinct<Node<Person>>("friend")
 							.Results.ToList();
 
