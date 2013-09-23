@@ -26,6 +26,11 @@ a:hover {
     text-decoration: none;
 }
 
+.extra-link {
+	font-size: 0.8em;
+	margin-left: 10px;
+}
+
 a:active {
     color: #12eb87;
 }
