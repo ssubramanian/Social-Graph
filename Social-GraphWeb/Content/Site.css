@@ -13,8 +13,8 @@ body {
 }
 
 a:link {
-    color: #88A4A1;
-    text-decoration: underline;
+    color: #6D6D6D;
+    text-decoration: none;
 }
 
 a:visited {
@@ -22,8 +22,8 @@ a:visited {
 }
 
 a:hover {
-    color: #A8DBD6;
-    text-decoration: none;
+    color: #88A4A1;
+    text-decoration: underline;
 }
 
 .extra-link {
@@ -106,7 +106,7 @@ header h1, #header h1 {
     border: none;
     line-height: 2em;
     font-size: 32px !important;
-    text-shadow: 1px 1px 2px #111;
+    text-shadow: 1px 1px 2px #333333;
 }
 
 #main {
