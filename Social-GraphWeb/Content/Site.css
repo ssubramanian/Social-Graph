@@ -13,16 +13,16 @@ body {
 }
 
 a:link {
-    color: #034af3;
+    color: #84b1ad;
     text-decoration: underline;
 }
 
 a:visited {
-    color: #505abc;
+    color: #2b3938;
 }
 
 a:hover {
-    color: #1d60ff;
+    color: #A5DBD8;
     text-decoration: none;
 }
 
@@ -32,7 +32,7 @@ a:hover {
 }
 
 a:active {
-    color: #12eb87;
+    color: #EFAD1C;
 }
 
 p, ul {
