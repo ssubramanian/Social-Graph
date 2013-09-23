@@ -320,3 +320,9 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
+/* Styles child page output
+-----------------------------------------------------------*/
+.relationship {
+	color: #ee264e;
+}

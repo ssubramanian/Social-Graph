@@ -24,16 +24,20 @@
 
 					var startName = Model.NodeName(startNode);
 					var endName = Model.NodeName(endNode);
-						
+
+					var relationshipTypeKey = @relationship.TypeKey.Replace("_", " ");
+					
 					count++;
 					<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-						@startName @relationship.TypeKey @endName
+						@startName <label class="relationship">@relationshipTypeKey</label> @endName
 						@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
 					</li>
 				}
 			}
 			</ol>
 			
+			<br></br>
+
 			<p>There are @Model.OtherPaths.Count() other paths between you and big money:</p> 
 			<div>
 				@foreach (var path in Model.OtherPaths)
@@ -46,16 +50,16 @@
 
 							var startName = Model.NodeName(startNode);
 							var endName = Model.NodeName(endNode);
+
+							var relationshipTypeKey = @relationship.TypeKey.Replace("_", " ");
 		  
 							<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-								@startName @relationship.TypeKey @endName
+								@startName <label class="relationship">@relationshipTypeKey</label> @endName
 							</li>
 						}
 					</ol>
 				}
 			</div>
 		</div>
-		
-		<a href="@Url.Action("Index")">Home Page</a>
 	</body>
 </html>
