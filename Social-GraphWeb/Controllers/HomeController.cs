@@ -147,7 +147,7 @@ namespace Social_GraphWeb.Controllers
 		{
 			var allPathsQuery = client.Cypher
 										   .Start(new { a = startReference, z = endReference })
-										   .Match("p=a-[:knows|teaches|takes_class_from|works_with|plays_tennis_with|plays_golf_with|married_to*1..7]->(z)")
+										   .Match("p=a-[:knows|teaches|takes_class_from|works_with|plays_tennis_with|plays_golf_with|married_to*1..100]->(z)")
 										   .Where("ALL (x IN nodes(p) WHERE SINGLE (x2 IN nodes(p) WHERE x=x2))")
 										   .Return(p => new PathsResult<Person, Knows>
 										   {
