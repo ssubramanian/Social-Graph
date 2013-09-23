@@ -22,7 +22,9 @@
 					
 			count++;
 			<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-				@startName <label class="relationship">@relationshipTypeKey</label> @endName
+				<a href="@Url.Action("KnownPeople", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
+				<label class="relationship">@relationshipTypeKey</label>
+				<a href="@Url.Action("KnownPeople", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
 			</li>
 		}
 	}
@@ -48,7 +50,9 @@
 					var relationshipTypeKey = Model.RelationshipDisplay(relationship.TypeKey);
 		  
 					<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-						@startName <label class="relationship">@relationshipTypeKey</label> @endName
+						<a href="@Url.Action("KnownPeople", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
+					<label class="relationship">@relationshipTypeKey</label>
+					<a href="@Url.Action("KnownPeople", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
 					</li>
 				}
 			</ol>
