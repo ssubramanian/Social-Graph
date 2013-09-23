@@ -2,7 +2,6 @@
 
 @{
 	Layout = "../Shared/_Layout.cshtml";
-	ViewBag.Title = "The Path to Financial Development";
 }
 
 <!DOCTYPE html>
@@ -13,7 +12,7 @@
 	</head>
 	<body>
 		<div>
-			<p>There are @Model.CountOfHops people between you and big money:</p> 
+			<p class="path-title">There are <label class="highlight-digit">@Model.CountOfHops</label> people between you and big money:</p> 
 			<ol>
 			@{
 				var count = 0;
@@ -38,7 +37,7 @@
 			
 			<br></br>
 
-			<p>There are @Model.OtherPaths.Count() other paths between you and big money:</p> 
+			<p class="path-title">There are <label class="highlight-digit">@Model.OtherPaths.Count()</label> other paths between you and big money:</p> 
 			<div>
 				@foreach (var path in Model.OtherPaths)
 				{

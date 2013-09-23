@@ -323,6 +323,16 @@ div#title {
 
 /* Styles child page output
 -----------------------------------------------------------*/
+.path-title {
+	font-weight: bold;
+	
+}
+
+.highlight-digit  {
+	font-size: 16px;
+	color: #b3ba5a;
+}
+
 .relationship {
 	color: #ee264e;
 }
