@@ -190,19 +190,6 @@ namespace Social_GraphWeb.Controllers
 		public int CountOfHops { get; set; }
 
 		public IEnumerable<PathsResult<Person, Knows>> OtherPaths { get; set; }
-
-		public string NodeName(Node<Person> node)
-		{
-			var firstName = node.Data.FirstName;
-
-			if (node.Reference == Me.Reference)
-				return firstName + " (you!)";
-
-			if (node.Reference == Target.Reference)
-				return firstName + " (big money!)";
-
-			return firstName;
-		}
 	}
 
     public class FriendsViewModel
