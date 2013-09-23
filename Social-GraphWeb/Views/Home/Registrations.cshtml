@@ -13,6 +13,7 @@
 	@foreach (var person in Model)
 	{
 		<li>
+			<img src="@Url.Content("~/Content/" +@person.Reference.Id  +".jpg")"/>
 			<a href="@Url.Action("Registrations", new { startNodeId = person.Reference.Id})">@person.Data.FirstName</a>
 			<a class="extra-link" href="@Url.Action("FriendsOfFriends", new { startNodeId = @person.Reference.Id, endLevel = 100 })">@person.Data.FirstName's network</a>
 		</li>
