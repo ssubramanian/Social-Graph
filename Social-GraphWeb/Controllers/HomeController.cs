@@ -73,10 +73,7 @@ namespace Social_GraphWeb.Controllers
             client.Connect();
             var startReference = new NodeReference<Person>(startNodeId, client);
 
-            //Still working on a query... Senthil
-
-	        
-	        var match = string.Format("me-[:knows|teaches|takes_class_from|works_with*{0}..{1}]->(friend)", startLevel, endLevel);
+            var match = string.Format("me-[:knows|teaches|takes_class_from|works_with*{0}..{1}]->(friend)", startLevel, endLevel);
 	        var friends = client.Cypher
 							.Start(new { me = startReference })
 							.Match(match)
