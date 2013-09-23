@@ -190,6 +190,16 @@ namespace Social_GraphWeb.Controllers
 		public int CountOfHops { get; set; }
 
 		public IEnumerable<PathsResult<Person, Knows>> OtherPaths { get; set; }
+
+		public string RelationshipDisplay(string relationshipType)
+		{
+			var display = relationshipType;
+
+			if (display == "married_to")
+				display = "is_married_to";
+
+			return display.Replace("_", " ");
+		}
 	}
 
     public class FriendsViewModel
