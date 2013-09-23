@@ -1,13 +1,19 @@
-﻿@model IEnumerable<Social_GraphWeb.Models.Person>
+﻿@model IEnumerable<Neo4jClient.Node<Social_GraphWeb.Models.Person>>
 
 @{
-	ViewBag.Title = "title";
+	ViewBag.Title = "Program registrations";
 }
 
-<h2>Others registered for the same program as me:</h2>
+<h2>Others registered for the same program(s) as @ViewBag.Person.Data.FirstName:</h2>
+@if (!Model.Any())
+{
+	<div class="error">Looks like you're on your own, bub.</div>
+}
 <ul>
 	@foreach (var person in Model)
 	{
-		<li>@person.FirstName</li>
+		<li>
+			<a href="@Url.Action("Registrations", new { startNodeId = person.Reference.Id})">@person.Data.FirstName</a>
+		</li>
 	}
 </ul>

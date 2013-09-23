@@ -26,22 +26,23 @@ namespace Social_GraphWeb.Controllers
             return View();
         }
 
-		public ActionResult Registrations()
+		public ActionResult Registrations(int startNodeId)
 		{
 			var client = new GraphClient(new Uri("http://10.4.0.229:7474/db/data"));
 
 			client.Connect();
 
-			var patrickReference = new NodeReference(2, client); //hard-coded
-			var patrick = client.Get<Person>(patrickReference);
+			var patrickReference = new NodeReference(startNodeId, client); //hard-coded
+			var me = client.Get<Person>(patrickReference);
 
-			Console.WriteLine(patrick.Data.FirstName);
+			Console.WriteLine(me.Data.FirstName);
 
 			var fluentQuery = client.Cypher
 				.Start("me", patrickReference)
 				.Match("me-[:registered_for]->session<-[:registered_for]-others")
-				.Return<Person>("others");
+				.Return<Node<Person>>("others");
 
+			ViewBag.Person = me;
 			return View(fluentQuery.Results);
 		}
 
