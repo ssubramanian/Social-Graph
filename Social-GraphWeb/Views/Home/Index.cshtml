@@ -3,12 +3,12 @@
 }
 
 <h2>Using graph database technology for member and donor engagement</h2>
-<ul>
-	<li><a href="@Url.Action("Path", new { startNodeId = 15, endNodeId =9})">The path to financial development</a></li>
-	<li><a href="@Url.Action("FriendsOfFriends", new { startNodeId = 15, startLevel=1, endLevel = 100})">Will you be my friend?</a></li>
-	<li><a href="@Url.Action("Registrations", new { startNodeId = 2})">Who else is registered for the same programs as me?</a></li>
+<ul class="menu">
+    <li style="padding-bottom: 10px;"><img src="@Url.Content("~/Content/FinancialDevelopment.png")" style="vertical-align:middle" height="25px" width="25px" /><a href="@Url.Action("Path", new { startNodeId = 15, endNodeId =9})" style="padding-left: 20px;">The path to financial development</a></li>
+	<li style="padding-bottom: 10px;"><img src="@Url.Content("~/Content/Friend.png")" style="vertical-align:middle"/><a href="@Url.Action("FriendsOfFriends", new { startNodeId = 15, startLevel=1, endLevel = 100})" style="padding-left: 20px;">Will you be my friend?</a></li>
+	<li style="padding-bottom: 10px;"><img src="@Url.Content("~/Content/Registration.png")" style="vertical-align:middle" height="25px" width="25px" /><a href="@Url.Action("Registrations", new { startNodeId = 2})" style="padding-left: 20px;">Who else is registered for the same programs as me?</a></li>
 </ul>
 <ul>
-	<li><a href="@Url.Action("Image", new { imageName = "FredsFriends.png"})">Fred's friends (graph)</a></li>
-	<li><a href="@Url.Action("Image", new { imageName = "JimsNetwork.png" })">Jim's network (graph)</a></li>
+	<li style="padding-bottom: 10px;"><img src="@Url.Content("~/Content/Graph.png")" style="vertical-align:middle" /><a href="@Url.Action("Image", new { imageName = "FredsFriends.png"})" style="padding-left: 20px;">Fred's friends (graph)</a></li>
+	<li style="padding-bottom: 10px;"><img src="@Url.Content("~/Content/Graph.png")" style="vertical-align:middle" /><a href="@Url.Action("Image", new { imageName = "JimsNetwork.png" })" style="padding-left: 20px;">Jim's network (graph)</a></li>
 </ul>
