@@ -1,64 +1,56 @@
 ﻿@model Social_GraphWeb.Controllers.PathViewModel
 
 @{
+	ViewBag.Title = "The path between " + Model.Me.Data.FirstName + " and " + Model.Target.Data.FirstName;
 	Layout = "../Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<div>
+	<p class="path-title">There are <label class="highlight-digit">@Model.CountOfHops</label> people between you and big money:</p> 
+	<ol>
+	@{
+		var count = 0;
+		foreach (var relationship in Model.ShortestPath.Relationships)
+		{
+			var startNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+			var endNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
-<html>
-	<head>
-		<title>Path</title>
-	</head>
-	<body>
-		<div>
-			<p class="path-title">There are <label class="highlight-digit">@Model.CountOfHops</label> people between you and big money:</p> 
+			var startName = Model.NodeName(startNode);
+			var endName = Model.NodeName(endNode);
+
+			var relationshipTypeKey = @relationship.TypeKey.Replace("_", " ");
+					
+			count++;
+			<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
+				@startName <label class="relationship">@relationshipTypeKey</label> @endName
+				@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
+			</li>
+		}
+	}
+	</ol>
+			
+	<br></br>
+
+	<p class="path-title">There are <label class="highlight-digit">@Model.OtherPaths.Count()</label> other paths between you and big money:</p> 
+	<div>
+		@foreach (var path in Model.OtherPaths)
+		{
 			<ol>
-			@{
-				var count = 0;
-				foreach (var relationship in Model.ShortestPath.Relationships)
+				@foreach (var relationship in path.Relationships)
 				{
-					var startNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-					var endNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+					var startNode = path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+					var endNode = path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
 					var startName = Model.NodeName(startNode);
 					var endName = Model.NodeName(endNode);
 
 					var relationshipTypeKey = @relationship.TypeKey.Replace("_", " ");
-					
-					count++;
+		  
 					<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
 						@startName <label class="relationship">@relationshipTypeKey</label> @endName
-						@*@((endNode.Reference == Model.Target.Reference || startNode.Reference == Model.Target.Reference) ? "(big money!)" : "")*@
 					</li>
 				}
-			}
 			</ol>
-			
-			<br></br>
-
-			<p class="path-title">There are <label class="highlight-digit">@Model.OtherPaths.Count()</label> other paths between you and big money:</p> 
-			<div>
-				@foreach (var path in Model.OtherPaths)
-				{
-					<ol>
-						@foreach (var relationship in path.Relationships)
-						{
-							var startNode = path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-							var endNode = path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
-
-							var startName = Model.NodeName(startNode);
-							var endName = Model.NodeName(endNode);
-
-							var relationshipTypeKey = @relationship.TypeKey.Replace("_", " ");
-		  
-							<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-								@startName <label class="relationship">@relationshipTypeKey</label> @endName
-							</li>
-						}
-					</ol>
-				}
-			</div>
-		</div>
-	</body>
-</html>
+		}
+	</div>
+</div>
