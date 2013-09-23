@@ -117,6 +117,10 @@ header h1, #header h1 {
     -moz-border-radius: 4px 4px 0 0;
 }
 
+#footer, footer, #main {
+	box-shadow: 5px 5px 3px #828A56;
+}
+
 footer, 
 #footer {
     background-color: #fff;
