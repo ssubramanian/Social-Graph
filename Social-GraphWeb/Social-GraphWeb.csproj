@@ -105,7 +105,9 @@
     <Compile Include="Specs\BuildAGraph.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\FinancialDevelopment.png" />
     <Content Include="Content\FredsFriends.PNG" />
+    <Content Include="Content\Friend.png" />
     <Content Include="Content\JimsNetwork.PNG" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
