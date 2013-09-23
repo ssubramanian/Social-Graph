@@ -68,7 +68,7 @@ namespace Social_GraphWeb.Controllers
             client.Connect();
             var startReference = new NodeReference<Person>(startNodeId, client);
 
-            var match = string.Format("me-[:knows|teaches|takes_class_from|works_with*{0}..{1}]->(friend)", startLevel, endLevel);
+			var match = string.Format("me-[:knows|teaches|takes_class_from|works_with|plays_tennis_with|plays_golf_with|married_to*{0}..{1}]->(friend)", startLevel, endLevel);
 	        var where = string.Format("NOT (ID(friend) IN [{0}])", startNodeId);
 
 	        var friends = client.Cypher
@@ -132,7 +132,7 @@ namespace Social_GraphWeb.Controllers
 	    {
 		    var shortestPathsQuery = client.Cypher
 		                                   .Start(new {a = startReference, z = endReference})
-		                                   .Match("p=shortestPath(a-[:knows|teaches|takes_class_from|works_with*]->(z))")
+										   .Match("p=shortestPath(a-[:knows|teaches|takes_class_from|works_with|plays_tennis_with|plays_golf_with|married_to*]->(z))")
 		                                   .Return(p => new PathsResult<Person, Knows>
 			                                   {
 				                                   Nodes = Return.As<IEnumerable<Node<Person>>>("nodes(p)"),
