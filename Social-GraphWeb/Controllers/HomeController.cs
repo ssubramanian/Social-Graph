@@ -107,10 +107,10 @@ namespace Social_GraphWeb.Controllers
 				.OrderBy(p=>p.Relationships.Count())
 				.ToList();
 
-			int countOfHops = 0;
+			int peopleBetween = 0;
 			var shortestPath = allPaths.FirstOrDefault();
-			if (shortestPath != null && shortestPath.Nodes.Any())
-				countOfHops = shortestPath.Nodes.Count() - 1;
+			if (shortestPath != null && shortestPath.Nodes.Any() && shortestPath.Nodes.Count() > 1)
+				peopleBetween = shortestPath.Nodes.Count() - 2;
 
 			allPaths.Remove(shortestPath);
 			var pathViewModel = new PathViewModel()
@@ -119,9 +119,8 @@ namespace Social_GraphWeb.Controllers
 					Me = start,
 					Target = end,
 					TargetId = endReference.Id,
-					CountOfHops = countOfHops,
+					PeopleBetween = peopleBetween,
 					ShortestPath = shortestPath,
-
 					OtherPaths = allPaths
 				};
 
@@ -180,7 +179,7 @@ namespace Social_GraphWeb.Controllers
 
 		public Node<Person> Target { get; set; }
 
-		public int CountOfHops { get; set; }
+		public int PeopleBetween { get; set; }
 
 		public IEnumerable<PathsResult<Person, Knows>> OtherPaths { get; set; }
 

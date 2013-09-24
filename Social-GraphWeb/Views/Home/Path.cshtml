@@ -7,58 +7,59 @@
 
 <div>
 	<img src="@Url.Content("~/Content/" + Model.Me.Reference.Id  +".jpg")"/><img src="@Url.Content("~/Content/" + Model.Target.Reference.Id  +".jpg")"/>
-	<p class="path-title">There are <label class="highlight-digit">@Model.CountOfHops</label> people between @Model.Me.Data.FirstName and @Model.Target.Data.FirstName:</p> 
-	<ol>
 	@{
-		var count = 0;
-		foreach (var relationship in Model.ShortestPath.Relationships)
-		{
-			var startNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-			var endNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+		var isOrAre = Model.PeopleBetween == 1 ? "is" : "are";
+		var personOrPeople = Model.PeopleBetween == 1 ? "person" : "people";
+		<p class="path-title">There @isOrAre <label class="highlight-digit">@Model.PeopleBetween</label> @personOrPeople between @Model.Me.Data.FirstName and @Model.Target.Data.FirstName:</p> 
+		<ol>
+		@{
+			foreach (var relationship in Model.ShortestPath.Relationships)
+			{
+				var startNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+				var endNode = Model.ShortestPath.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
-			var startName = startNode.Data.FirstName;
-			var endName = endNode.Data.FirstName;
+				var startName = startNode.Data.FirstName;
+				var endName = endNode.Data.FirstName;
 
-			var relationshipTypeKey = Model.RelationshipDisplay(relationship.TypeKey);
+				var relationshipTypeKey = Model.RelationshipDisplay(relationship.TypeKey);
 					
-			count++;
-			<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-				<a href="@Url.Action("Path", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
-				<label class="relationship">@relationshipTypeKey</label>
-				<a href="@Url.Action("Path", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
-			</li>
+				<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
+					<a href="@Url.Action("Path", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
+					<label class="relationship">@relationshipTypeKey</label>
+					<a href="@Url.Action("Path", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
+				</li>
+			}
 		}
+		</ol>
 	}
-	</ol>
-		
 	
 	@if (Model.OtherPaths.Any())
 	{
-	 <br></br>
-	<p class="path-title">There are <label class="highlight-digit">@Model.OtherPaths.Count()</label> other paths between @Model.Me.Data.FirstName and @Model.Target.Data.FirstName:</p> 
-	<div>
-		@foreach (var path in Model.OtherPaths)
-		{
-			<ol>
-				@foreach (var relationship in path.Relationships)
-				{
-					var startNode = path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
-					var endNode = path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
+		<br/>
+		<p class="path-title">There are <label class="highlight-digit">@Model.OtherPaths.Count()</label> other paths between @Model.Me.Data.FirstName and @Model.Target.Data.FirstName:</p> 
+		<div>
+			@foreach (var path in Model.OtherPaths)
+			{
+				<ol>
+					@foreach (var relationship in path.Relationships)
+					{
+						var startNode = path.Nodes.First(n => n.Reference == relationship.StartNodeReference);
+						var endNode = path.Nodes.First(n => n.Reference == relationship.EndNodeReference);
 
-					var startName = startNode.Data.FirstName;
-					var endName = endNode.Data.FirstName;
+						var startName = startNode.Data.FirstName;
+						var endName = endNode.Data.FirstName;
 
-					var relationshipTypeKey = Model.RelationshipDisplay(relationship.TypeKey);
+						var relationshipTypeKey = Model.RelationshipDisplay(relationship.TypeKey);
 		  
-					<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
-						<a href="@Url.Action("Path", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
-					<label class="relationship">@relationshipTypeKey</label>
-					<a href="@Url.Action("Path", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
-					</li>
-				}
-			</ol>
-		}
-	</div>
+						<li data-start-id="@startNode.Reference.Id" data-end-id="@endNode.Reference.Id" data-relationship-id="@relationship.Reference.Id">
+							<a href="@Url.Action("Path", new { startNodeId = startNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@startName</a>
+						<label class="relationship">@relationshipTypeKey</label>
+						<a href="@Url.Action("Path", new { startNodeId = endNode.Reference.Id, endNodeId = Model.Me.Reference.Id})">@endName</a>
+						</li>
+					}
+				</ol>
+			}
+		</div>
 	}
 	
 	<div>
